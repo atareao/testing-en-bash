@@ -21,12 +21,52 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-testEquality(){
-    assertEquals "Deben ser iguales" 1 1
+# --- 👇 A continuación los test unitarios que quieras hacer 👇 ---
+
+## Aquí los Assert
+
+testEquals(){
+    assertEquals "Iguales" 1 1
 }
 
-testEquality2(){
-    assertEquals "Deberían ser iguales" 1 2
+testNotEquals(){
+    assertNotEquals "Distintos" 1 2
+}
+
+testContains(){
+    assertContains "Contiene" "Esto contiene un 1" 1
+}
+
+testNotContains(){
+    assertNotContains "No contiene" "Esto contiene un 2" 1
+}
+
+testNull(){
+    assertNull "Nulo" ""
+}
+
+testNotNull(){
+    assertNotNull "No nulo" "nulo"
+}
+
+testTrue(){
+    assertTrue "Cierto" 0
+}
+
+testTrue2(){
+    assertTrue "Cierto" "${SHUNIT_TRUE}"
+}
+
+testTrue3(){
+    assertTrue "Cierto" "[[ 2 -eq 2 ]]"
+}
+
+testTrue4(){
+    assertTrue "Cierto" "[[ -d "${SCRIPT_DIR}/shunit2" ]]"
+}
+
+testFalse(){
+    assertFalse "Falso" 1
 }
 
 testSuma(){
@@ -34,9 +74,16 @@ testSuma(){
     assertEquals 23 "${result}"
 }
 
+# --- 👇 Aquí los scripts con el código a probar 👇 ---
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 oneTimeSetUp(){
-    . ../src/sample.sh
+    source "${SCRIPT_DIR}/../src/sample.sh"
 }
 
+# --- 👇 la librería que nos permite realizar las pruebas 👇 ---
+
 # Load shUnit2
-. ./shunit2/shunit2
+source "${SCRIPT_DIR}/shunit2/shunit2"
+
