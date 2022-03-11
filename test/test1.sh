@@ -110,6 +110,12 @@ testSaludo(){
     assertEquals "Hola" "${result}"
 }
 
+testUUID(){
+    curl -s -X GET "https://httpbin.org/uuid" | grep uuid > /dev/null
+    rs=$?
+    assertTrue "${rs}"
+}
+
 # --- 👇 Aquí los scripts con el código a probar 👇 ---
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 oneTimeSetUp(){
