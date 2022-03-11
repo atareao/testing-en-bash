@@ -69,21 +69,52 @@ testFalse(){
     assertFalse "Falso" 1
 }
 
+testFail(){
+    fail "Este test falla siempre"
+}
+
+testFailNotEquals(){
+    failNotEquals "Este test falla siempre" 1 2
+}
+
+testSkippin(){
+    assertTrue "Cierto" 0
+    startSkipping
+    fail "Este falla pero no se ejecutará"
+    endSkipping
+    assertTrue "Este si" 0
+}
+
 testSuma(){
     result=$(suma 1 22)
     assertEquals 23 "${result}"
 }
 
+testMultiplicacion(){
+    result=$(multiplicacion 2 22)
+    assertEquals 44 "${result}"
+}
+
+testApi301(){
+    result=$(curl -s -o /dev/null -w "%{http_code}" -X GET "https://httpbin.org/status/301" -H  "accept: text/plain")
+    assertEquals 301 "${result}"
+}
+
+testApi200(){
+    result=$(curl -s -o /dev/null -w "%{http_code}" -X DELETE "https://httpbin.org/status/200" -H  "accept: text/plain")
+    assertEquals 200 "${result}"
+}
+
+testSaludo(){
+    result=$(curl -s -X GET "https://httpbin.org/base64/SG9sYQo%3D" -H  "accept: text/html")
+    assertEquals "Hola" "${result}"
+}
+
 # --- 👇 Aquí los scripts con el código a probar 👇 ---
-
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
 oneTimeSetUp(){
     source "${SCRIPT_DIR}/../src/sample.sh"
 }
-
 # --- 👇 la librería que nos permite realizar las pruebas 👇 ---
-
 # Load shUnit2
 source "${SCRIPT_DIR}/shunit2/shunit2"
-

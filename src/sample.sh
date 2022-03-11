@@ -24,3 +24,7 @@
 function suma(){
     echo $(($1 + $2))
 }
+
+function multiplicacion(){
+    echo $(($1 * $2))
+}
